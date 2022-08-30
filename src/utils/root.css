@@ -11,4 +11,10 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
+
+:root {
+  --color-primary: theme("colors.teal.100");
+  --color-secondary: theme("colors.yellow.500");
+}
+
   
