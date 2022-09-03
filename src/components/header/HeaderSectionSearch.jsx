@@ -5,7 +5,7 @@ import { useState } from 'react';
 export default function HeaderSectionSeach(){
     const [ valueSearch, setValueSearch ] = useState("");
 
-    const onHandleChangeSeachValue = (e: string) => {
+    const onHandleChangeSeachValue = (e) => {
         setValueSearch(e)
     }
 
