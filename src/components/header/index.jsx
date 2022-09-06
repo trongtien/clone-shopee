@@ -1,4 +1,4 @@
-import { lazy, memo, useCallback } from 'react';
+import { memo, useCallback } from 'react';
 import { createSearchParams, useNavigate, useSearchParams  } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
@@ -6,26 +6,8 @@ import { LazyLoadImage } from 'react-lazy-load-image-component';
 import HeaderNavLink from "./HeaderNavLink";
 import HeaderSectionSeach from "./HeaderSectionSearch";
 import HeaderLinkSearchCategorie from './HeaderLinkCategorie';
-
-
-const dataSearch=  [
-    {
-        id: 1,
-        name: "Dép",
-    },
-    {
-        id: 2,
-        name: "Áo khoác",
-    },
-    {
-        id: 3,
-        name: "Áo phông",
-    },
-    {
-        id: 4,
-        name: "Dép nữ",
-    }
-]
+import { PathRoot } from '../../utils';
+import { useGetCategorySystemKeySeachQuery } from '../../features/category-system-key-search/categorySystemKeySearchService';
 
 const UmemoizedHeaderLinkSeachCategories = memo(HeaderLinkSearchCategorie);
 const UmemoizedHeaderSectionSeach = memo(HeaderSectionSeach);
@@ -33,20 +15,28 @@ const UmemoizedHeaderSectionSeach = memo(HeaderSectionSeach);
 const LogoHeader = "https://cdn.haitrieu.com/wp-content/uploads/2022/05/Logo-ShopeeXpress-H-Orange.png";
 
 export default function Header(){
-
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
     const searchParamsCurrent = searchParams.get('keyword') === null ? "" : searchParams.get('keyword');
+    
+    const {
+        data: CategoryKeySeachs,
+        // isLoading,
+        // isSuccess,
+        // isError,
+        // error
+    } = useGetCategorySystemKeySeachQuery();
 
     const onHandleChangeSeach = useCallback((keyword) => {
         if(keyword !== searchParamsCurrent) {
             navigate({
-                pathname: "search",
+                pathname: PathRoot.search,
                 search: createSearchParams({
                     keyword: keyword
                 }).toString()
             });
         }
+        
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
@@ -70,7 +60,7 @@ export default function Header(){
                         onClickSeach={onHandleChangeSeach}
                     />
                     <UmemoizedHeaderLinkSeachCategories 
-                        dataSeach={dataSearch}
+                        dataSeach={CategoryKeySeachs}
                         onchangeSeach={onHandleChangeSeach}
                     />
                 </div>

@@ -6,7 +6,7 @@ export default function HeaderLinkSearchCategorie({ onchangeSeach, dataSeach }){
     const onHandleClickchageSeach = (keyword) => onchangeSeach(keyword)
 
     return (
-        <div className="flex items-center flex-end p-1 pl-0">
+        <div className="flex items-center flex-end p-1 pt-2 pl-0">
             {
                 dataSeach.map(
                     data => <p
