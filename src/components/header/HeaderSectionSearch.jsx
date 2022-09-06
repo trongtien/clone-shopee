@@ -1,24 +1,29 @@
+import { useLayoutEffect,  useState } from 'react';
+import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
-import { useState } from 'react';
 
-export default function HeaderSectionSeach(){
-    const [ valueSearch, setValueSearch ] = useState("");
+export default function HeaderSectionSeach({valueSeach, onClickSeach}){
+    
+    const [ value, setValueSearch ] = useState(valueSeach);
+
+    useLayoutEffect(() => {
+        if(value !== valueSeach) setValueSearch(valueSeach)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [valueSeach])
 
     const onHandleChangeSeachValue = (e) => {
         setValueSearch(e)
     }
 
-    const onHanleClickSearch = () => {
-        console.log("valueSearch onHanleClickSearch", valueSearch)
-    }
+    const onHanleClickSearch = () => onClickSeach(value)
 
     return (
         <div className="w-full relative">
             <input 
                 className="w-full h-10 pr-24 pl-4" 
                 placeholder="Sản phẩm muốn tiềm kiếm"
-                value={valueSearch}
+                value={value}
                 onChange={e => onHandleChangeSeachValue(e.target.value)}
             />
             <button 
@@ -29,4 +34,15 @@ export default function HeaderSectionSeach(){
             </button>
         </div>
     )
+}
+
+
+HeaderSectionSeach.propTypes = {
+    valueSeach: PropTypes.string,
+    onClickSeach: PropTypes.func
+}
+
+HeaderSectionSeach.defautProps = {
+    valueSeach: "",
+    onClickSeach: () => {}
 }
