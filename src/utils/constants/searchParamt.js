@@ -1,4 +1,3 @@
-
 export const enumParamtSeach = {
-    KEYWORD: "keyword"
+  KEYWORD: 'keyword'
 }
