@@ -6,15 +6,32 @@
 :root {
     --color-primary: theme("colors.teal.100");
     --color-secondary: theme("colors.yellow.500");
+    --color-line: theme("colors.bg-root");
+    --color-success: theme("colors.success");
+    --color-error: theme("colors.error");
+    --color-text: theme("colors.text-secondary");
 }
 
 body {
     margin: 0;
+    background-color: theme("colors.bg-root");
     font-family: "Helvetica Neue,Helvetica,Arial,文泉驛正黑,WenQuanYi Zen Hei,Hiragino Sans GB,儷黑 Pro,LiHei Pro,Heiti TC,微軟正黑體,Microsoft JhengHei UI,Microsoft JhengHei,sans-serif";
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    
 }
 
+body::-webkit-scrollbar{
+    width: 0.3em;
+    cursor: pointer;
+}
 
+body::-webkit-scrollbar-track{
+    background-color: rgba(229, 231, 235, var(--bg-opacity));
+    cursor: pointer;
+}
 
-  
+body::-webkit-scrollbar-thumb{
+    cursor: pointer;
+    background-color: #a0aec0;
+}

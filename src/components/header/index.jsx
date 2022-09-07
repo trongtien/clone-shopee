@@ -1,13 +1,13 @@
 import { memo, useCallback } from 'react';
-import { createSearchParams, useNavigate, useSearchParams  } from "react-router-dom";
+import { createSearchParams, useNavigate, useSearchParams, Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import HeaderNavLink from "./HeaderNavLink";
 import HeaderSectionSeach from "./HeaderSectionSearch";
 import HeaderLinkSearchCategorie from './HeaderLinkCategorie';
-import { PathRoot } from '../../utils';
-import { useGetCategorySystemKeySeachQuery } from '../../features/category-system-key-search/categorySystemKeySearchService';
+import { useGetCategorySystemKeySeachQuery } from '~/features/category-system-key-search/categorySystemKeySearchService';
+import { enumParamtSeach, PathRootSystem } from '~/utils';
 
 const UmemoizedHeaderLinkSeachCategories = memo(HeaderLinkSearchCategorie);
 const UmemoizedHeaderSectionSeach = memo(HeaderSectionSeach);
@@ -17,22 +17,16 @@ const LogoHeader = "https://cdn.haitrieu.com/wp-content/uploads/2022/05/Logo-Sho
 export default function Header(){
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
-    const searchParamsCurrent = searchParams.get('keyword') === null ? "" : searchParams.get('keyword');
+    const searchParamsCurrent = searchParams.get(enumParamtSeach.KEYWORD) === null ? "" : searchParams.get(enumParamtSeach.KEYWORD);
     
-    const {
-        data: CategoryKeySeachs,
-        // isLoading,
-        // isSuccess,
-        // isError,
-        // error
-    } = useGetCategorySystemKeySeachQuery();
+    const { data: CategoryKeySeachs } = useGetCategorySystemKeySeachQuery();
 
     const onHandleChangeSeach = useCallback((keyword) => {
         if(keyword !== searchParamsCurrent) {
             navigate({
-                pathname: PathRoot.search,
+                pathname: PathRootSystem.search,
                 search: createSearchParams({
-                    keyword: keyword
+                    [enumParamtSeach.KEYWORD]: keyword
                 }).toString()
             });
         }
@@ -45,7 +39,7 @@ export default function Header(){
             <HeaderNavLink />
 
             <div className="flex header-seach justify-between items-center pt-4 pl-1 pr-1">
-                <p className="">
+                <Link to={PathRootSystem.home} className="logo-header">
                     <LazyLoadImage 
                         src={LogoHeader} 
                         accessKey='' 
@@ -53,7 +47,8 @@ export default function Header(){
                         className='logo-image w-[11em] h-[3em]' 
                         effect="black-and-white"
                     />
-                </p>
+                </Link>
+
                 <div className="header-search-section p w-[70%]">
                     <UmemoizedHeaderSectionSeach  
                         valueSeach={searchParamsCurrent}
@@ -64,6 +59,7 @@ export default function Header(){
                         onchangeSeach={onHandleChangeSeach}
                     />
                 </div>
+
                 <div className="header-search-cart flex align-center items-center w-32">
                     <FontAwesomeIcon icon={faCartShopping} size="2x" color='white'/>
                 </div>

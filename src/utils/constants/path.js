@@ -1,4 +1,5 @@
-export const PathRoot = {
+export const PathRootSystem = {
+    account_user: "/user-account-shop",
     account_shop_register: "/user-account-shop/register",
     account_shop_login: "/user-account-shop/login",
     account_register: "/user-register",
@@ -10,3 +11,7 @@ export const PathRoot = {
 }
 
 
+
+export const PathRootLayoutAccountUser = {
+
+}
