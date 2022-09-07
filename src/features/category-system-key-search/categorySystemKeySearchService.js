@@ -1,9 +1,10 @@
-import { createApi } from '@reduxjs/toolkit/query/react'
-import RTKCreateApiBase from '../../utils/libs/storeRTK'
+import RTKCreateApiBase from "~/utils/libs/storeRTK"
 
-export const categorySystemServiceApi = createApi({
-    ...RTKCreateApiBase,
-    tagTypes: ['CategorySystemKeySearch'],
+const categorySystemServiceApiWithTag =  RTKCreateApiBase.enhanceEndpoints({
+    addTagTypes: ['CategorySystem']
+})
+
+export const categorySystemServiceApi = categorySystemServiceApiWithTag.injectEndpoints({
     endpoints: (builder) => ({
         getCategorySystemKeySeach: builder.query({
             query: () => {
@@ -11,19 +12,36 @@ export const categorySystemServiceApi = createApi({
                     url: '/category-system/key-search',
                     headers: {
                         "x-api-key-system": "system"
-                    }
+                    },
+                    validateStatus: (response, result) => response.status === 200 && !result.isError
                 }
             },
             transformResponse: res => {
                 return res
             },
-            providesTags: ['CategorySystemKeySearch']
+            providesTags: ['CategorySystem']
+        }),
+        getCategory:builder.query({
+            query: () => {
+                return {
+                    url: '/category-system',
+                    headers: {
+                        "x-api-key-system": "system"
+                    },
+                    validateStatus: (response, result) => response.status === 200 && !result.isError
+                }
+            },
+            transformResponse: res => {
+                return res
+            },
+            providesTags: ['CategorySystem']
         })
     })
 })
 
 export const {
     useGetCategorySystemKeySeachQuery,
+    useGetCategoryQuery
 } = categorySystemServiceApi
 
 

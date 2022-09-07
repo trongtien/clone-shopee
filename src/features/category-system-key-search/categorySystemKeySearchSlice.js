@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { categorySystemServiceApi } from './categorySystemKeySearchService';
-// import { RTKCreateApiCustom } from '../../utils/libs/RTKCreateApiCustom';
 
 const initialState = {
     keySearch: null,
@@ -13,7 +12,6 @@ export const categorySystemKeySearchSlice = createSlice({
     reducers: {},
     extraReducers: (builder) => {
         builder.addMatcher(categorySystemServiceApi.endpoints.getCategorySystemKeySeach.matchFulfilled, (state, action) => {
-            console.log("action", action)
             state.keySearch = action.payload
         })
     }
